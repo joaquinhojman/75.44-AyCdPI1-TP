@@ -23,6 +23,4 @@ async def login(request: Request, response_class=HTMLResponse):
 
 @router.get('/logout')
 def logout():
-    return 'bye'
-    session.pop('username', None)
-    return redirect(url_for('login'))
+    raise NotImplementedError()
