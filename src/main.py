@@ -1,6 +1,8 @@
 import uvicorn
 import login as login
 import register as register
+import home as home
+import my_home as my_home
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -9,6 +11,8 @@ from fastapi.templating import Jinja2Templates
 app = FastAPI()
 app.include_router(login.router)
 app.include_router(register.router)
+app.include_router(home.router)
+app.include_router(my_home.router)
 
 app.mount('/static', StaticFiles(directory='./src/static'), name='static')
 

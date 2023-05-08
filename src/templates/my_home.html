@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='my_home.css') }}">
+    <title>House description form</title>
+  </head>
+  <script>
+    function validateForm() {
+        var start_date = document.getElementById("start_date").value;
+        var end_date = document.getElementById("end_date").value;
+        if (start_date > end_date) {
+            error_msg.innerHTML = "Start date must be before end date!";
+            return false;
+        }
+        return true;
+    }
+</script>
+  <body>
+    <h1>House description form</h1>
+    <form method="post" action="{{ url_for('create_home') }}" onsubmit="return validateForm()">
+      <label for="description">House description:</label>
+      <textarea id="description" name="description" required rows="5" cols="50"></textarea>
+      
+      <label for="start_date">Start date:</label>
+      <input type="date" id="start_date" name="start_date" required>
+      
+      <label for="end_date">End date:</label>
+      <input type="date" id="end_date" name="end_date" required>
+      
+      <div id="error_msg" style="color: red;"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
