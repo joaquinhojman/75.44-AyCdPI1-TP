@@ -6,8 +6,17 @@
 </head>
 <script>
     function validateForm() {
+        var email = document.getElementById("email").value;
+        if (!email.includes("@") || !email.includes(".")) {
+            error_msg.innerHTML = "Invalid email address!";
+            return false;
+        }
         var password = document.getElementById("password").value;
         var confirm_password = document.getElementById("confirm_password").value;
+        if (password.length < 8) {
+            error_msg.innerHTML = "Password must be at least 8 characters long!";
+            return false;
+        }
         if (password != confirm_password) {
             error_msg.innerHTML = "Passwords do not match!";
             return false;
@@ -23,8 +32,8 @@
         <div class="error">{{ error }}</div>
         {% endif %}
         <form method="POST" action="{{ url_for('register') }}" onsubmit="return validateForm()">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <label for="confirm_password">Confirm Password:</label>

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Form, Request, HTTPException
 from typing_extensions import Annotated
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from src.db import user_exists
+from db import user_exists
 
 
 templates = Jinja2Templates(directory="./src/templates")

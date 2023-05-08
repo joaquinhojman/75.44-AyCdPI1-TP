@@ -1,6 +1,6 @@
 import uvicorn
-import src.login as login
-import src.register as register
+import login as login
+import register as register
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
