@@ -5,14 +5,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 
-
 templates = Jinja2Templates(directory="./src/templates")
 
 router = APIRouter()
 
-@router.post('/home')
-async def home(request: Request, response_class=HTMLResponse):
-    return templates.TemplateResponse("home.html", {"request": request, "houses": read_houses()})
+@router.post('/home/{username}')
+async def home(request: Request, response_class=HTMLResponse, username: str = None):
+    print(username)
+    return templates.TemplateResponse("home.html", {"request": request, "houses": read_houses(), "username": username})
 
 @router.get('/add_my_home')
 def add_my_home(request: Request):

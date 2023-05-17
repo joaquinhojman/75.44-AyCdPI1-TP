@@ -4,6 +4,18 @@
     <title>Care App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
 </head>
+<script>
+    function aplicate_to_house(username, house) {
+        fetch("/aplication?username=" + username + "&house=" + house)
+            .then(function(response) {
+                alert("Su solicitud se ha realizado con éxito.")                
+            })
+            .catch(function(error) {
+                alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
+            });
+    }
+</script>
+
 <body>
     <nav>
         <div class="container">
@@ -24,53 +36,15 @@
         <div class="container">
 
             <a href="{{ url_for('add_my_home') }}">Add my home</a>
-
-            <h1>Dashboard</h1>
-            <div class="assignments">
-                <h2>Current Assignments</h2>
-                <ul>
-                    <li>
-                        <h3>House in Paris</h3>
-                        <p>From: 1st June 2023 - To: 10th June 2023</p>
-                    </li>
-                    <li>
-                        <h3>Apartment in London</h3>
-                        <p>From: 15th June 2023 - To: 20th June 2023</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="assignments">
-                <h2>Past Assignments</h2>
-                <ul>
-                    <li>
-                        <h3>House in New York</h3>
-                        <p>From: 1st May 2023 - To: 10th May 2023</p>
-                    </li>
-                    <li>
-                        <h3>Apartment in Madrid</h3>
-                        <p>From: 15th April 2023 - To: 20th April 2023</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="opportunities">
-                <h2>Opportunities</h2>
-                <ul>
-                    <li>
-                        <h3>House in Tuscany</h3>
-                        <p>From: 1st July 2023 - To: 15th July 2023</p>
-                        <a href="#">Apply Now</a>
-                    </li>
-                    <li>
-                        <h3>Apartment in Amsterdam</h3>
-                        <p>From: 20th July 2023 - To: 30th July 2023</p>
-                        <a href="#">Apply Now</a>
-                    </li>
-                </ul>
-            </div>
         </div>
         <div><ul>
             {% for name in houses %}
-                <li>Description: {{ name[0] }}. Start date: {{name[1]}}. End date: {{name[2]}}</li>
+                <li>Description: {{ name[1] }}. Start date: {{name[2]}}. End date: {{name[3]}}</li>
+                {% if name[4] == username %}
+                    <a href="#">Ver solicitantes</a>
+                {% else %}                    
+                    <a href="#" onclick="aplicate_to_house('{{ username }}', '{{ name[0] }}')">Aplicar</a>
+                {% endif %}
             {% endfor %}
             </ul>
         </div>

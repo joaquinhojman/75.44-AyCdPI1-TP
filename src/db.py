@@ -2,6 +2,7 @@ from csv import writer, reader, QUOTE_MINIMAL
 
 DB_ROUTE_USERS = './db'
 DB_ROUTE_HOUSES = './db_houses'
+DB_ROUTE_APLICATIONS = './db_aplications'
 
 try:
     with open(DB_ROUTE_USERS, 'x', newline='\n'):
@@ -28,9 +29,15 @@ def house_create(description, start_date, end_date):
         write.writerow((description, start_date, end_date))
 
 def read_houses():
+    id = 0
     with open(DB_ROUTE_HOUSES, 'r', newline='\n') as db:
+        id += 1
         f = reader(db, delimiter=';')
         contenido = []
         for line in f:
-            contenido.append(line)
+            contenido.append([id] + line)
     return contenido
+
+def aplicate_to_house(user, house):
+    with open(DB_ROUTE_APLICATIONS, 'a', newline='\n') as db:
+        db.write(f'{user};{house}\n')

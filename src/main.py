@@ -3,6 +3,7 @@ import login as login
 import register as register
 import home as home
 import my_home as my_home
+import aplication as aplication
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -13,6 +14,7 @@ app.include_router(login.router)
 app.include_router(register.router)
 app.include_router(home.router)
 app.include_router(my_home.router)
+app.include_router(aplication.router)
 
 app.mount('/static', StaticFiles(directory='./src/static'), name='static')
 

@@ -14,7 +14,7 @@ router = APIRouter()
 def login(request: Request, username: Annotated[str, Form()], password: Annotated[str, Form()], response_class=HTMLResponse):
     exists, user_pass = user_exists(username=username)
     if exists and user_pass[0] == username and user_pass[1] == password:
-        redirect_url = request.url_for('home')    
+        redirect_url = request.url_for('home', username=username)    
         return RedirectResponse(redirect_url)
     raise HTTPException(status_code=401, detail='User or password invalid')
 
