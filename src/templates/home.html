@@ -41,7 +41,7 @@
             {% for name in houses %}
                 <li>Description: {{ name[1] }}. Start date: {{name[2]}}. End date: {{name[3]}}</li>
                 {% if name[4] == username %}
-                    <a href="#">Ver solicitantes</a>
+                    <a href="{{ url_for('aplications', username=username, house=name[0]) }}">Ver solicitantes</a>
                 {% else %}                    
                     <a href="#" onclick="aplicate_to_house('{{ username }}', '{{ name[0] }}')">Aplicar</a>
                 {% endif %}

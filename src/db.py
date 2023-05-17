@@ -31,13 +31,22 @@ def house_create(description, start_date, end_date):
 def read_houses():
     id = 0
     with open(DB_ROUTE_HOUSES, 'r', newline='\n') as db:
-        id += 1
         f = reader(db, delimiter=';')
         contenido = []
         for line in f:
+            id += 1
             contenido.append([id] + line)
     return contenido
 
 def aplicate_to_house(user, house):
     with open(DB_ROUTE_APLICATIONS, 'a', newline='\n') as db:
         db.write(f'{user};{house}\n')
+
+def view_aplications(house):
+    aplications = []
+    with open(DB_ROUTE_APLICATIONS, 'r', newline='\n') as db:
+        f = reader(db, delimiter=';')
+        for line in f:
+            if line[1] == house:
+                aplications.append(line[0])
+    return aplications
