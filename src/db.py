@@ -1,4 +1,5 @@
 from csv import writer, reader, QUOTE_MINIMAL
+from user import get_current_user
 
 DB_ROUTE_USERS = './db'
 DB_ROUTE_HOUSES = './db_houses'
@@ -6,6 +7,16 @@ DB_ROUTE_APLICATIONS = './db_aplications'
 
 try:
     with open(DB_ROUTE_USERS, 'x', newline='\n'):
+        pass
+except:
+    pass
+try:
+    with open(DB_ROUTE_HOUSES, 'x', newline='\n'):
+        pass
+except:
+    pass
+try:
+    with open(DB_ROUTE_APLICATIONS, 'x', newline='\n'):
         pass
 except:
     pass
@@ -26,7 +37,7 @@ def user_create(username, password):
 def house_create(description, start_date, end_date):
     with open(DB_ROUTE_HOUSES, 'a', newline='\n') as db:
         write = writer(db, delimiter=';', quoting=QUOTE_MINIMAL)
-        write.writerow((description, start_date, end_date))
+        write.writerow((description, start_date, end_date, get_current_user()))
 
 def read_houses():
     id = 0

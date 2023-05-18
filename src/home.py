@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Form, Request, HTTPException
+from user import get_current_user
+from fastapi import APIRouter, Form, Request, HTTPException, Depends
 from typing_extensions import Annotated
 from db import read_houses
 from fastapi.responses import HTMLResponse
@@ -7,15 +8,16 @@ from fastapi.responses import RedirectResponse
 
 templates = Jinja2Templates(directory="./src/templates")
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(get_current_user)]
+)
 
-@router.post('/home/{username}')
-async def home(request: Request, response_class=HTMLResponse, username: str = None):
-    print(username)
+@router.get('/home')
+async def home(request: Request, response_class=HTMLResponse, username: str = Depends(get_current_user)):
     return templates.TemplateResponse("home.html", {"request": request, "houses": read_houses(), "username": username})
 
 @router.get('/add_my_home')
-def add_my_home(request: Request):
+async def add_my_home(request: Request):
     try:
         redirect_url = request.url_for('my_home')    
         return RedirectResponse(redirect_url)
