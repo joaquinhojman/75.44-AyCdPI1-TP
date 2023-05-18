@@ -35,7 +35,7 @@ ul {
 }
 
 li {
-  display: inline-block;
+  display: block;
   margin-right: 10px;
 }
 
@@ -165,4 +165,8 @@ a:hover {
   font-size: 16px;
   font-weight: bold;
   padding: 0 10px;
+}
+
+.body-aplications {
+  margin-left: 2rem;
 }

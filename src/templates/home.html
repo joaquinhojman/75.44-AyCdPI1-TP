@@ -83,12 +83,15 @@
                 {% for name in other_houses %}
                     <li class="house">
                         <div class="description">
+                        <label>Description:</label>
                         {{ name[1] }}
                         </div>
                         <div class="start-date">
+                        <label>Start Date:</label>
                         {{name[2]}}
                         </div>
                         <div class="end-date">
+                        <label>End Date:</label>
                         {{name[3]}}
                         </div>
                         <a onclick="aplicate_to_house('{{ username }}', '{{ name[0] }}')">
