@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  app:
+    image: careapp:latest
+    container_name: careapp
+    ports:
+      - "5000:5000"
+    environment:
+      - DB=postgresql://postgres:postgres@postgres/
+    depends_on:
+      - postgres
+    restart: on-failure
+
+  postgres:
+    image: postgres:15.3-alpine
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'

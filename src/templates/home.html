@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
 </head>
 <script>
-    function aplicate_to_house(username, house) {
+    function aplicate_to_house(house) {
         fetch("/aplication?house=" + house, {
             method: 'POST',
         })
@@ -24,7 +24,7 @@
             <img src="{{ url_for('static', path='careapp_logo.jpg') }}" alt="CareApp Logo">
         </a>
         <div class="owner-section">
-        {% set my_houses = houses | selectattr(4, '==', username) | list %}
+        {% set my_houses = houses | selectattr(4, '==', user_id) | list %}
             {% if my_houses|length == 0 %}
               <h1 class="section-name">No houses published</h1>
               <p class="empty-message">
@@ -77,7 +77,7 @@
         {% endif %}
         </div>
         <div class="other-owners-section">
-            {% set other_houses = houses | selectattr(4, '!=', username) | list %}
+            {% set other_houses = houses | selectattr(4, '!=', user_id) | list %}
             <h1>Other Homes</h1>
             <ul>
                 {% for name in other_houses %}
@@ -94,7 +94,7 @@
                         <label>End Date:</label>
                         {{name[3]}}
                         </div>
-                        <a onclick="aplicate_to_house('{{ username }}', '{{ name[0] }}')">
+                        <a onclick="aplicate_to_house('{{ name[0] }}')">
                             <button class="button">
                                 <span class="button-text">Aplicar</span>
                             </button>
