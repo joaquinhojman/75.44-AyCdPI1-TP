@@ -6,8 +6,12 @@
 </head>
 <script>
     function aplicate_to_house(house) {
-        fetch("/aplication?house=" + house, {
+        fetch("/application", {
             method: 'POST',
+            headers: {
+                 "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "house_id": house }),
         })
         .then(function(response) {
             alert("Su solicitud se ha realizado con éxito.")                
@@ -16,38 +20,74 @@
             alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
         });
     }
+
 </script>
 
 <body>
-    <div class="dashboard">
-        <a href="#">
-            <img src="{{ url_for('static', path='careapp_logo.jpg') }}" alt="CareApp Logo">
-        </a>
-        <div class="owner-section">
+<div class="dashboard">
+    <a href="#">
+        <img src="{{ url_for('static', path='careapp_logo.jpg') }}" alt="CareApp Logo">
+    </a>
+    <div class="owner-section">
         {% set my_houses = houses | selectattr(4, '==', user_id) | list %}
-            {% if my_houses|length == 0 %}
-              <h1 class="section-name">No houses published</h1>
-              <p class="empty-message">
-                Calling all pet-loving homeowners! 🐾🏡 
-              </p>
-              <p class="empty-message">
-                Share the love and warmth of your home with fellow animal enthusiasts by becoming a part of our pet-friendly community. 
-              </p>
-              <p class="empty-message">
-                Publish your home with pets and embark on unforgettable experiences for both humans and their furry friends. 
-              </p>
-              <p class="empty-message">
+        {% if my_houses|length == 0 %}
+            <h1 class="section-name">No houses published</h1>
+            <p class="empty-message">
+                Calling all pet-loving homeowners! 🐾🏡
+            </p>
+            <p class="empty-message">
+                Share the love and warmth of your home with fellow animal enthusiasts by becoming a part of our
+                pet-friendly community.
+            </p>
+            <p class="empty-message">
+                Publish your home with pets and embark on unforgettable experiences for both humans and their furry
+                friends.
+            </p>
+            <p class="empty-message">
                 Click the button below and start spreading joy, one wagging tail at a time! 🐶❤️🐱
-              </p>
-            <a href="{{ url_for('my_home')}}">
+            </p>
+            <a href="{{ url_for('my_home') }}">
                 <button class="button">
                     <span class="button-text">Publish Home</span>
                 </button>
             </a>
-            {% else %}
-          <h1>My Homes</h1>
-          <ul>
-            {% for name in my_houses %}
+        {% else %}
+            <h1>My Homes</h1>
+            <ul>
+                {% for name in my_houses %}
+                    <li class="house">
+                        <div class="description">
+                            <label>Description:</label>
+                            {{ name[1] }}
+                        </div>
+                        <div class="start-date">
+                            <label>Start Date:</label>
+                            {{ name[2] }}
+                        </div>
+                        <div class="end-date">
+                            <label>End Date:</label>
+                            {{ name[3] }}
+                        </div>
+                        <a href="{{ url_for('applications', house=name[0]) }}">
+                            <button class="button">
+                                <span class="button-text">Ver solicitantes</span>
+                            </button>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('my_home') }}">
+                <button class="button">
+                    <span class="button-text">Publish Home</span>
+                </button>
+            </a>
+        {% endif %}
+    </div>
+    <div class="other-owners-section">
+        {% set other_houses = houses | selectattr(4, '!=', user_id) | list %}
+        <h1>Other Homes</h1>
+        <ul>
+            {% for name in other_houses %}
                 <li class="house">
                     <div class="description">
                         <label>Description:</label>
@@ -55,54 +95,21 @@
                     </div>
                     <div class="start-date">
                         <label>Start Date:</label>
-                        {{name[2]}}
+                        {{ name[2] }}
                     </div>
                     <div class="end-date">
                         <label>End Date:</label>
-                        {{name[3]}}
+                        {{ name[3] }}
                     </div>
-                    <a href="{{ url_for('aplications', house=name[0]) }}">
-                    <button class="button">
-                        <span class="button-text">Ver solicitantes</span>
-                    </button>
+                    <a onclick="aplicate_to_house('{{ name[0] }}')">
+                        <button class="button">
+                            <span class="button-text">Aplicar</span>
+                        </button>
                     </a>
-              </li>
+                </li>
             {% endfor %}
         </ul>
-        <a href="{{ url_for('my_home')}}">
-            <button class="button">
-                <span class="button-text">Publish Home</span>
-            </button>
-        </a>
-        {% endif %}
-        </div>
-        <div class="other-owners-section">
-            {% set other_houses = houses | selectattr(4, '!=', user_id) | list %}
-            <h1>Other Homes</h1>
-            <ul>
-                {% for name in other_houses %}
-                    <li class="house">
-                        <div class="description">
-                        <label>Description:</label>
-                        {{ name[1] }}
-                        </div>
-                        <div class="start-date">
-                        <label>Start Date:</label>
-                        {{name[2]}}
-                        </div>
-                        <div class="end-date">
-                        <label>End Date:</label>
-                        {{name[3]}}
-                        </div>
-                        <a onclick="aplicate_to_house('{{ name[0] }}')">
-                            <button class="button">
-                                <span class="button-text">Aplicar</span>
-                            </button>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-      </div>
+    </div>
+</div>
 </body>
 </html>

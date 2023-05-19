@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Integer, String, ForeignKey
+from sqlalchemy import Column, DateTime, Integer, String, Boolean, ForeignKey
 from db import Base
 
 
@@ -16,6 +16,7 @@ class House(Base):
     description = Column(String)
     start_date = Column(DateTime)
     end_date = Column(DateTime)
+    available = Column(Boolean, default=True)
     owner_id = Column(Integer, ForeignKey('Users.user_id'))
 
 

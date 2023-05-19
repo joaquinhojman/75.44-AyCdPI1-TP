@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
+</head>
+<script>
+    function accept_application(application_id) {
+        fetch("/application/accept", {
+            method: 'POST',
+            headers: {
+                 "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "application_id": application_id }),
+        })
+        .then(function(response) {
+            alert("Su solicitud se ha realizado con éxito.")
+        })
+        .catch(function(error) {
+            alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
+        });
+    }
+
+    function reject_application(application_id) {
+        fetch("/application/reject", {
+            method: 'POST',
+            headers: {
+                 "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "application_id": application_id }),
+        })
+        .then(function(response) {
+            alert("Su solicitud se ha realizado con éxito.")
+        })
+        .catch(function(error) {
+            alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
+        });
+    }
+
+</script>
+
+<body class="body-applications">
+<h2> Estas son las solicitudes para cuidar tu casa. </h2>
+<div>
+    <ul>
+        {% for application in applications %}
+            <li>aplicante: {{ application[0] }}</li>
+            <a onclick="accept_application('{{ application[1] }}')">
+                <button class="button">
+                    <span class="button-text">Aceptar</span>
+                </button>
+            </a>
+            <a onclick="reject_application('{{ application[1] }}')">
+                <button class="button">
+                    <span class="button-text">Rechazar</span>
+                </button>
+            </a>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

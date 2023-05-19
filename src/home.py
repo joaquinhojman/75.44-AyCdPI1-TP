@@ -18,7 +18,7 @@ router = APIRouter(
 @router.get('/home')
 async def home(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
                db: Session = Depends(get_db)):
-    houses = db.query(models.House).all()
+    houses = db.query(models.House).filter(models.House.available==True).all()
     houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id), houses))
     return templates.TemplateResponse("home.html", {"request": request, "houses": houses, "user_id": user_id})
 
