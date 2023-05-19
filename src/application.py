@@ -10,6 +10,7 @@ from db import get_db
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from user import get_current_user
+from fastapi.responses import RedirectResponse
 
 templates = Jinja2Templates(directory="./templates")
 
@@ -46,9 +47,14 @@ async def applications(request: Request, response_class=HTMLResponse, user_id: s
 
 
 @router.post('/application/reject')
-async def reject_application(application: ApplicationBase):
-    print(application.application_id)
-
+async def reject_application(request: Request, application: ApplicationBase, db: Session = Depends(get_db)):
+    app = db.query(models.UserApplication).filter(
+        models.UserApplication.user_application_id == application.application_id).first()
+    if not app:
+        print('application not found')
+        raise HTTPException(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR)
+    db.delete(app)
+    db.commit()
 
 @router.post('/application/accept')
 async def accept_application(application: ApplicationBase, db: Session = Depends(get_db)):
