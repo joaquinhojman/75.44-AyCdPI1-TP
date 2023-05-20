@@ -35,3 +35,10 @@ async def add_my_home(request: Request):
 @router.get('/my_home')
 async def my_home(request: Request, response_class=HTMLResponse):
     return templates.TemplateResponse("my_home.html", {"request": request})
+
+
+@router.get('/view_home/<home_id>')
+async def my_home(home_id,request: Request, response_class=HTMLResponse, db: Session = Depends(get_db)):
+    house = db.query(models.House).filter(models.House.house_id==home_id).first()
+
+    return templates.TemplateResponse("home.html", {"request": request, "house":house})
