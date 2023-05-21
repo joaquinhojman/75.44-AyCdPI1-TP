@@ -64,7 +64,6 @@ async def accept_application(application: ApplicationBase, db: Session = Depends
         # if raises, we'd fuck'd up
         print('application not found')
         raise HTTPException(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR)
-    print(app.house_id, app.user_application_id, app.user_id)
     house = db.query(models.House).filter(models.House.house_id == app.house_id).first()
     if not house:
         # if raises, we also have fuck'd up
