@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='my_home.css') }}">
+    <title>User information form</title>
+  </head>
+
+  <body>
+    <h1>User information form</h1>
+    <form method="post" action="{{ url_for('add_info') }}" onsubmit="">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="last_name">Last name:</label>
+      <input type="text" id="last_name" name="last_name" required>
+
+      <label for="description">User description:</label>
+      <textarea id="description" name="description" required rows="5" cols="50"></textarea>
+      
+      <label for="pets">Pets:</label>
+      <input type="text" id="pets" name="pets" required>
+      
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required>
+      
+      <div id="error_msg" style="color: red;"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

@@ -32,8 +32,7 @@ async def add_user_info(request: Request,
 
 
 @router.get('/view_user/<id>')
-async def view_user(id, request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
-               db: Session = Depends(get_db)):
+async def view_user(id, request: Request, response_class=HTMLResponse, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.user_id==id).first()
     user_info = list(map(lambda u: (u.user_id, u.name, u.last_name, u.pets, u.location, u.description), user))
     return templates.TemplateResponse("my_user.html", {"request": request, "user_info": user_info, "user_id": id})
