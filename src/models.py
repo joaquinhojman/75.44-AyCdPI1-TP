@@ -8,6 +8,10 @@ class User(Base):
     user_id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
+    country = Column(String)
+    age = Column(Integer)
+    description = Column(String)
+    photo_url = Column(String)
 
 
 class House(Base):

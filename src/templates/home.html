@@ -21,6 +21,10 @@
         });
     }
 
+    function validateForm() {
+        return true;
+    }
+
 </script>
 
 <body>
@@ -48,7 +52,7 @@
             </p>
             <a href="{{ url_for('my_home') }}">
                 <button class="button">
-                    <span class="button-text">Publish Home</span>
+                    <span class="button-text">Publish Home 🚀</span>
                 </button>
             </a>
         {% else %}
@@ -109,6 +113,22 @@
                 </li>
             {% endfor %}
         </ul>
+    </div>
+</div>
+<div class="profile">
+    <div class="form-container">
+    <h1> My Profile </h1>
+    <form method="POST" action="{{ url_for('edit') }}" onsubmit="return validateForm()">
+        <li><label for="country">Country:</label>
+        <input type="text" id="country" name="country" value={{user.country}} required></li>
+        <li><label for="age">Age:</label>
+        <input type="number" id="age" name="age" value={{user.age}} required></li>
+        <li><label for="description">Description:</label>
+        <textarea type="text" id="description" name="description" rows="5" cols="50" required>{{user.description}}</textarea></li>
+        <button class="button">
+            <span class="button-text">Edit</span>
+        </button>
+    </form>
     </div>
 </div>
 </body>
