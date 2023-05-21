@@ -22,6 +22,8 @@ class House(Base):
     end_date = Column(DateTime)
     available = Column(Boolean, default=True)
     owner_id = Column(Integer, ForeignKey('Users.user_id'))
+    rooms = Column(Integer)
+    city = Column(Integer)
 
 
 class UserApplication(Base):
@@ -29,3 +31,14 @@ class UserApplication(Base):
     user_application_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('Users.user_id'))
     house_id = Column(Integer, ForeignKey('Houses.house_id'))
+
+class Pet(Base):
+    __tablename__ = 'Pet'
+    pet_id = Column(Integer, primary_key=True)
+    animal_id = Column(String, ForeignKey('Animal.animal_id'))
+    house_id = Column(Integer, ForeignKey('Houses.house_id'))
+    pet_name = Column(String)
+
+class Animal(Base):
+    __tablename__ = 'Animal'
+    animal_id = Column(String, primary_key=True)

@@ -34,8 +34,10 @@ async def add_my_home(request: Request):
 
 
 @router.get('/my_home')
-async def my_home(request: Request, response_class=HTMLResponse):
-    return templates.TemplateResponse("my_home.html", {"request": request})
+async def my_home(request: Request, response_class=HTMLResponse, db: Session = Depends(get_db)):
+    animals = db.query(models.Animal).all()
+    animals = list(map(lambda a: a.animal_id, animals))
+    return templates.TemplateResponse("my_home.html", {"request": request, "animals": animals})
 
 @router.post("/edit", response_class=HTMLResponse)
 def edit(request: Request, age: str = Form(...), country: str = Form(...), description: str = Form(...), db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
