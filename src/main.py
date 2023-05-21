@@ -5,6 +5,7 @@ import register as register
 import home as home
 import my_home as my_home
 import application as application
+import my_user as my_user
 from db import engine, Base
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -19,6 +20,7 @@ app.include_router(register.router)
 app.include_router(home.router)
 app.include_router(my_home.router)
 app.include_router(application.router)
+app.include_router(my_user.router)
 
 app.mount('/static', StaticFiles(directory='./static'), name='static')
 

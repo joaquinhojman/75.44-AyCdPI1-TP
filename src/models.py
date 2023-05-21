@@ -8,7 +8,11 @@ class User(Base):
     user_id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
-
+    name = Column(String)
+    last_name = Column(String)
+    pets = Column(String)
+    location = Column(String)
+    description = Column(String)
 
 class House(Base):
     __tablename__ = 'Houses'
