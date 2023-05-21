@@ -75,7 +75,7 @@ ul {
   padding: 0;
 }
 
-li {
+.li_usuarios {
   border-bottom: 1px solid #cccccc;
   padding: 10px 0;
 }

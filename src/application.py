@@ -41,7 +41,8 @@ async def applications(request: Request, response_class=HTMLResponse, user_id: s
     usernames = []
     for app in applications:
         user = db.query(models.User).filter(models.User.user_id == app.user_id).first()
-        usernames.append((user.username, app.user_application_id))
+        usernames.append((user.username, app.user_application_id, user.description, user.country, user.age))
+    
     return templates.TemplateResponse("applications.html", {"request": request, "applications": usernames,
                                                             "user_id": user_id})
 
