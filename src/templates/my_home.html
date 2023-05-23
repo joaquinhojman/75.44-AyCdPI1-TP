@@ -20,9 +20,6 @@
     <h1>House description form</h1>
     <div class="form-container">
     <form method="post" action="{{ url_for('create_home') }}" onsubmit="return validateForm()">
-      <label for="description">House description:</label>
-      <textarea id="description" name="description" required rows="5" cols="50"></textarea>
-      
       <label for="start_date">Start date:</label>
       <input type="date" id="start_date" name="start_date" required>
       
@@ -30,17 +27,25 @@
       <input type="date" id="end_date" name="end_date" required>
       
       <label for="rooms">Rooms:</label>
-      <input type="number" id="rooms" name="rooms" required>
+      <input type="number" id="room" name="room" required>
 
       <label for="city">City:</label>
       <input id="city" name="city" required>
 
       <label for="pet"> Pets: </label>
-      <select id="miCombobox">
-        {% for name in animals %}
-        <option value="{{ name }}">{{ name }}</option>
-        {% endfor %}
-      </select>
+
+      <div>
+      {% for name in animals %}
+      <div>
+        <label class="check-animal">{{ name }}</label>
+        <label class="check-animal">Cantidad: </label>
+        <input class="check-animal" type="number" name="{{name}}_cant" min="0" max="10" id="{{name}}_cant" value="0">
+      </div>
+      {% endfor %}
+      </div>
+
+      <label for="description">House description:</label>
+      <textarea id="description" name="description" required rows="5" cols="50"></textarea>
       
       <div id="error_msg" style="color: red;"></div>
       <button type="submit">Publish</button>

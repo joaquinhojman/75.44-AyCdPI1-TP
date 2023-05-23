@@ -23,7 +23,7 @@ class House(Base):
     available = Column(Boolean, default=True)
     owner_id = Column(Integer, ForeignKey('Users.user_id'))
     rooms = Column(Integer)
-    city = Column(Integer)
+    city = Column(String)
 
 
 class UserApplication(Base):
@@ -37,7 +37,7 @@ class Pet(Base):
     pet_id = Column(Integer, primary_key=True)
     animal_id = Column(String, ForeignKey('Animal.animal_id'))
     house_id = Column(Integer, ForeignKey('Houses.house_id'))
-    pet_name = Column(String)
+    pet_cant = Column(Integer)
 
 class Animal(Base):
     __tablename__ = 'Animal'

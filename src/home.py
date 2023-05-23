@@ -7,6 +7,7 @@ from db import get_db
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from functools import reduce
 
 templates = Jinja2Templates(directory="./templates")
 
@@ -19,9 +20,15 @@ router = APIRouter(
 async def home(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
                db: Session = Depends(get_db)):
     houses = db.query(models.House).filter(models.House.available==True).all()
-    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id), houses))
+    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id, h.city, h.rooms), houses))
+
+    new_houses = []
+    for house in houses:
+        pets = db.query(models.Pet).filter(models.Pet.house_id == house[0]).all()
+        pets_list = list(map(lambda p: (p.animal_id, p.pet_cant), pets))
+        new_houses.append((*house, [*pets_list]))
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
-    return templates.TemplateResponse("home.html", {"request": request, "houses": houses, "user_id": user_id, "user": user})
+    return templates.TemplateResponse("home.html", {"request": request, "houses": new_houses, "user_id": user_id, "user": user})
 
 
 @router.get('/add_my_home')
