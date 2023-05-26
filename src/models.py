@@ -24,6 +24,11 @@ class House(Base):
     owner_id = Column(Integer, ForeignKey('Users.user_id'))
     rooms = Column(Integer)
     city = Column(String)
+    image1 = Column(String)
+    image2 = Column(String)
+    image3 = Column(String)
+    image4 = Column(String)
+    image5 = Column(String)
 
 
 class UserApplication(Base):

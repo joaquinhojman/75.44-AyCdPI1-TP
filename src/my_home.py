@@ -32,6 +32,11 @@ async def create_home(request: Request,
                       Morsa_cant: str = Form(...),
                       Carpincho_cant: str = Form(...),
                       Otro_cant: str = Form(...),
+                      image1: str = Form(None),
+                      image2: str = Form(None),
+                      image3: str = Form(None),
+                      image4: str = Form(None),
+                      image5: str = Form(None),
                       db: Session = Depends(get_db)):
     pets = {}
     pets['Perro'] = Perro_cant
@@ -48,8 +53,9 @@ async def create_home(request: Request,
     
     try:
         house = models.House(description=description, start_date=start_date, end_date=end_date,
-                                    city=city, rooms=room,
-                            owner_id=get_current_user())
+                                    city=city, rooms=room, image1=image1, image2=image2, 
+                                    image3=image3, image4=image4, image5=image5,
+                                    owner_id=get_current_user())
         db.add(house)
         db.commit()
 

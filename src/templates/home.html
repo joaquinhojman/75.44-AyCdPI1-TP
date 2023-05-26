@@ -5,20 +5,14 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
 </head>
 <script>
-    function aplicate_to_house(house) {
-        fetch("/application", {
-            method: 'POST',
+    async function view_details(house) {
+        const r = await fetch("/home/"+house, {
+            method: 'GET',
             headers: {
                  "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "house_id": house }),
-        })
-        .then(function(response) {
-            alert("Su solicitud se ha realizado con éxito.")                
-        })
-        .catch(function(error) {
-            alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
         });
+        return r;
     }
 
     function validateForm() {
@@ -108,10 +102,6 @@
         <ul>
             {% for name in other_houses %}
                 <li class="house">
-                    <div class="description">
-                        <label>Description:</label>
-                        {{ name[1] }}
-                    </div>
                     <div class="start-date">
                         <label>Start Date:</label>
                         {{ name[2] }}
@@ -124,20 +114,9 @@
                         <label>City:</label>
                         {{ name[5] }}
                     </div>
-                    <div class="description">
-                        <label>Rooms:</label>
-                        {{ name[6] }}
-                    </div>
-                    {% for name in name[7] %}
-                    <label> Mascotas: </label>
-                    <div>
-                        <label>{{ name[0] }}. </label>
-                        <label>Cantidad: {{ name[1] }}</label>
-                    </div>
-                    {% endfor %}
-                    <a onclick="aplicate_to_house('{{ name[0] }}')">
+                    <a href="{{ url_for('/home/', house_id=name[0]) }}">
                         <button class="button">
-                            <span class="button-text">Aplicar</span>
+                            <span class="button-text">View details</span>
                         </button>
                     </a>
                 </li>

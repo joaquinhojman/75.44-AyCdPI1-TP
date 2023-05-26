@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
+</head>
+<script>
+    function aplicate_to_house(house) {
+        fetch("/application", {
+            method: 'POST',
+            headers: {
+                 "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "house_id": house }),
+        })
+        .then(function(response) {
+            alert("Su solicitud se ha realizado con éxito.")                
+        })
+        .catch(function(error) {
+            alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
+        });
+    }
+
+    function validateForm() {
+        return true;
+    }
+
+</script>
+<body>
+    <div class="other-owners-section">
+        <ul>
+            <li class="house">
+                <div class="description">
+                    <label>Description:</label>
+                    {{ house.description }}
+                </div>
+                <div class="start-date">
+                    <label>Start Date:</label>
+                    {{ house.start_date }}
+                </div>
+                <div class="end-date">
+                    <label>End Date:</label>
+                    {{ house.end_date }}
+                </div>
+                <div class="description">
+                    <label>City:</label>
+                    {{ house.city }}
+                </div>
+                <div class="description">
+                    <label>Rooms:</label>
+                    {{ house.rooms }}
+                </div>
+                {% for name in pets %}
+                <label> Mascotas: </label>
+                <div>
+                    <label>{{ name[0] }}. </label>
+                    <label>Cantidad: {{ name[1] }}</label>
+                </div>
+                {% endfor %}
+                <a onclick="aplicate_to_house('{{ house.house_id }}')">
+                    <button class="button">
+                        <span class="button-text">Aplicar</span>
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
