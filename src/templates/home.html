@@ -114,7 +114,7 @@
                         <label>City:</label>
                         {{ name[5] }}
                     </div>
-                    <a href="{{ url_for('/home/', house_id=name[0]) }}">
+                    <a href="{{ url_for('house_details', house_id=name[0]) }}">
                         <button class="button">
                             <span class="button-text">View details</span>
                         </button>

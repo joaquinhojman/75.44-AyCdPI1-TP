@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Care App</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='house_details.css') }}">
 </head>
 <script>
     function aplicate_to_house(house) {
@@ -15,6 +15,7 @@
         })
         .then(function(response) {
             alert("Su solicitud se ha realizado con éxito.")                
+            location.replace('/home');
         })
         .catch(function(error) {
             alert("Ups! Algo salió mal. Por favor, inténtelo de nuevo.")
@@ -27,42 +28,60 @@
 
 </script>
 <body>
-    <div class="other-owners-section">
-        <ul>
-            <li class="house">
-                <div class="description">
-                    <label>Description:</label>
-                    {{ house.description }}
-                </div>
-                <div class="start-date">
-                    <label>Start Date:</label>
-                    {{ house.start_date }}
-                </div>
-                <div class="end-date">
-                    <label>End Date:</label>
-                    {{ house.end_date }}
-                </div>
-                <div class="description">
-                    <label>City:</label>
-                    {{ house.city }}
-                </div>
-                <div class="description">
-                    <label>Rooms:</label>
-                    {{ house.rooms }}
-                </div>
-                {% for name in pets %}
-                <label> Mascotas: </label>
-                <div>
-                    <label>{{ name[0] }}. </label>
-                    <label>Cantidad: {{ name[1] }}</label>
-                </div>
-                {% endfor %}
-                <a onclick="aplicate_to_house('{{ house.house_id }}')">
-                    <button class="button">
-                        <span class="button-text">Aplicar</span>
-                    </button>
-                </a>
-            </li>
-        </ul>
+    <div class="form-container">
+        <h1>This is the full information for the house:</h1>
+        <form>
+            <div class="description">
+                <label>Description:</label>
+                {{ house.description }}
+            </div>
+            <div class="start-date">
+                <label>Start Date:</label>
+                {{ house.start_date }}
+            </div>
+            <div class="end-date">
+                <label>End Date:</label>
+                {{ house.end_date }}
+            </div>
+            <div class="description">
+                <label>City:</label>
+                {{ house.city }}
+            </div>
+            <div class="description">
+                <label>Rooms:</label>
+                {{ house.rooms }}
+            </div>
+            <label> Mascotas: </label>
+            <ul>
+            {% for name in pets %}
+            <div>
+                <li>{{ name[0] }}. </li>
+                {{ name[1] }}
+            </div>
+            {% endfor %}
+
+            {% if house.image1 %}
+                <img src="{{house.image1}}" alt="Imagen1">
+            {% endif %}
+            {% if house.image2 %}
+                <img src="{{house.image2}}" alt="Imagen2">
+            {% endif %}
+            {% if house.image3 %}
+                <img src="{{house.image3}}" alt="Imagen3">
+            {% endif %}
+            {% if house.image4 %}
+                <img src="{{house.image4}}" alt="Imagen4">
+            {% endif %}
+            {% if house.image5 %}
+                <img src="{{house.image5}}" alt="Imagen5">
+            {% endif %}
+
+            </ul>
+            <a onclick="aplicate_to_house('{{ house.house_id }}')">
+                <button class="button">
+                    <span class="button-text">Apply now!</span>
+                </button>
+            </a>
+        </form>
     </div>
 </body>

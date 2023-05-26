@@ -58,8 +58,8 @@ def edit(request: Request, age: str = Form(...), country: str = Form(...), descr
     return templates.TemplateResponse("home.html", {"request": request, "user_id": user_id, "user": user})
 
 
-@router.get('/home/{house_id}')
-async def home_details(request: Request, house_id: str, response_class=HTMLResponse, db: Session = Depends(get_db)):
+@router.get('/house_details/{house_id}')
+async def house_details(request: Request, response_class=HTMLResponse, house_id: int=None, db: Session = Depends(get_db)):
     house = db.query(models.House).filter(models.House.house_id == house_id).first()
     pets = db.query(models.Pet).filter(models.Pet.house_id == house_id).all()
     pets_list = list(map(lambda p: (p.animal_id, p.pet_cant), pets))
