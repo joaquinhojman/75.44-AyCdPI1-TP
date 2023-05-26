@@ -74,18 +74,26 @@
                             <label>Rooms:</label>
                             {{ name[6] }}
                         </div>
-                        {% for name in name[7] %}
+                        {% for name in name[8] %}
                         <label> Mascotas: </label>
                         <div>
                             <label>{{ name[0] }}. </label>
                             <label>Cantidad: {{ name[1] }}</label>
                         </div>
                         {% endfor %}
+                        {% if name[7] %}
                         <a href="{{ url_for('applications', house=name[0]) }}">
                             <button class="button">
                                 <span class="button-text">Ver solicitantes</span>
                             </button>
                         </a>
+                        {% else %}
+                        <a href="{{ url_for('applications_confirmed', house=name[0]) }}">
+                            <button class="button">
+                                <span class="button-text">Ver inquilino</span>
+                            </button>
+                        </a>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

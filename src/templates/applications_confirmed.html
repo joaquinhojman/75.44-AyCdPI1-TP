@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='house_details.css') }}">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>This is the full information for user:</h1>
+        <form>
+            <div class="description">
+                <label>Aplicante:</label>
+                {{ user.username }}
+            </div>
+            <div class="description">
+                <label>Country:</label>
+                {{ user.country }}
+            </div>
+            <div class="description">
+                <label>Age:</label>
+                {{ user.age }}
+            </div>
+            <div class="description">
+                <label>Description:</label>
+                {{ user.description }}
+            </div>
+        </form>
+    </div>
+</body>

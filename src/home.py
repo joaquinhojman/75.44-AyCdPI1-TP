@@ -1,3 +1,4 @@
+from operator import or_
 import models
 from sqlalchemy.orm import Session
 
@@ -19,8 +20,10 @@ router = APIRouter(
 @router.get('/home')
 async def home(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
                db: Session = Depends(get_db)):
-    houses = db.query(models.House).filter(models.House.available==True).all()
-    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id, h.city, h.rooms), houses))
+    houses = db.query(models.House).filter(or_(
+            models.House.available==True, models.House.owner_id == user_id
+        )).all()
+    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id, h.city, h.rooms, h.available), houses))
 
     new_houses = []
     for house in houses:

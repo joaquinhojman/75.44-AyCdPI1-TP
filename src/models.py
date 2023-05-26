@@ -36,6 +36,7 @@ class UserApplication(Base):
     user_application_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('Users.user_id'))
     house_id = Column(Integer, ForeignKey('Houses.house_id'))
+    accepted = Column(Boolean, default=None)
 
 class Pet(Base):
     __tablename__ = 'Pet'

@@ -1,4 +1,5 @@
 import logging
+from operator import and_
 
 import starlette.status
 
@@ -37,7 +38,10 @@ async def application(response_class=HTMLResponse, user_id: str = Depends(get_cu
 @router.get('/applications/{house}')
 async def applications(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
                        house: int = None, db: Session = Depends(get_db)):
-    applications = db.query(models.UserApplication).filter(models.UserApplication.house_id == house).all()
+    applications = db.query(models.UserApplication).filter(and_(
+        models.UserApplication.house_id == house,
+        models.UserApplication.accepted == None
+    )).all()
     usernames = []
     for app in applications:
         user = db.query(models.User).filter(models.User.user_id == app.user_id).first()
@@ -45,6 +49,17 @@ async def applications(request: Request, response_class=HTMLResponse, user_id: s
     
     return templates.TemplateResponse("applications.html", {"request": request, "applications": usernames,
                                                             "user_id": user_id})
+
+@router.get('/applications_confirmed/{house}')
+async def applications_confirmed(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user),
+                       house: int = None, db: Session = Depends(get_db)):
+    application = db.query(models.UserApplication).filter(and_(
+        models.UserApplication.house_id == house,
+        models.UserApplication.accepted == True
+    )).first()
+    user = db.query(models.User).filter(models.User.user_id == application.user_id).first()
+    
+    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id})
 
 
 @router.post('/application/reject')
@@ -54,7 +69,7 @@ async def reject_application(request: Request, application: ApplicationBase, db:
     if not app:
         print('application not found')
         raise HTTPException(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR)
-    db.delete(app)
+    app.accepted = False
     db.commit()
 
 @router.post('/application/accept')
@@ -72,6 +87,7 @@ async def accept_application(application: ApplicationBase, db: Session = Depends
         raise HTTPException(status_code=starlette.status.HTTP_500_INTERNAL_SERVER_ERROR)
     # perform server side instead of here
     house.available = False
+    app.accepted = True
     db.flush()
     db.commit()
     print(house.available)
