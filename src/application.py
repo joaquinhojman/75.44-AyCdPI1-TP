@@ -59,11 +59,7 @@ async def applications_confirmed(request: Request, response_class=HTMLResponse, 
     )).first()
     user = db.query(models.User).filter(models.User.user_id == application.user_id).first()
     rating = db.query(models.Ratings).filter(and_(models.Ratings.user_id == str(user.user_id), models.Ratings.house_id == str(house))).first()
-    if rating:
-        print(rating.rating)
-    else:
-        print("NOT RATED")
-    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id, "house_id": house, "rating": 0 if not rating else rating.rating})
+    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id, "house_id": house, "rating": rating})
 
 
 @router.post('/application/reject')
@@ -94,20 +90,21 @@ async def accept_application(application: ApplicationBase, db: Session = Depends
     app.accepted = True
     db.flush()
     db.commit()
-    print(house.available)
 
 
 @router.post('/rate_applicant/{user_id}/{house_id}')
-async def rate_applicant(request: Request, user_id, house_id, db: Session = Depends(get_db), rating = Form(...)):
+async def rate_applicant(request: Request, user_id, house_id, db: Session = Depends(get_db), rating = Form(...), comment = Form(None)):
     row = db.query(models.Ratings).filter(models.Ratings.user_id == user_id).filter(models.Ratings.house_id == house_id).first()
     if row:
         row.rating = rating
+        if comment:
+            row.comment = comment
     else:
         db.add(models.Ratings(
             user_id=user_id,
             house_id=house_id,
             rating=rating,
-            comment='TU VIEJA'))
+            comment=comment))
     db.commit()
 
     redirect_url = request.url_for('applications_confirmed', house=house_id)

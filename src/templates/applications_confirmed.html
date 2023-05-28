@@ -40,7 +40,12 @@
         </form>
         <form method="POST" action="{{ url_for('rate_applicant', user_id=user.user_id, house_id=house_id) }}">
             <label for="rating">Rating:</label>
-            <input type="number" id="rating" name="rating" value={{rating}} required>
+            <input type="number" id="rating" name="rating" value={{rating.rating}} required>
+            {% if rating.comment %}
+                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant...">{{rating.comment}}</textarea>
+            {% else %}
+                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant..."></textarea>
+            {% endif %}
             <button type="submit">Rate your applicant!</button>
         </form>
     </div>
