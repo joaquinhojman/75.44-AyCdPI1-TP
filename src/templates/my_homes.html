@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home2.css') }}">
+</head>
+<script>
+    function validateForm() {
+        return true;
+    }
+</script>
+
+<body>
+    <div class="form">
+        <h1>My Homes</h1>
+            {% set my_houses = houses | selectattr(4, '==', user_id) | list %}
+            <ul>
+                {% for name in my_houses %}
+                    <li class="house">
+                        <div style="display: flex; margin-top:1rem">
+                            <label>Description: &nbsp;</label> <p> {{ name[1] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>Start Date: &nbsp;</label> <p> {{ name[2] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>End Date: &nbsp;</label> <p> {{ name[3] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>City: &nbsp;</label> <p> {{ name[5] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>Rooms: &nbsp;</label> <p> {{ name[6] }}</p>
+                        </div>
+                        {% for name in name[8] %}
+                        <label> Mascotas: </label>
+                        <div style="display: flex;">
+                            <label>{{ name[0] }}. Cantidad: &nbsp;</label> <p> {{ name[1] }}</p>
+                        </div>
+                        {% endfor %}
+                        {% if name[7] %}
+                        <a href="{{ url_for('applications', house=name[0]) }}">
+                            <button class="button">
+                                <span class="button-text">Ver solicitantes</span>
+                            </button>
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('applications_confirmed', house=name[0]) }}">
+                            <button class="button">
+                                <span class="button-text">Ver inquilino</span>
+                            </button>
+                        </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+</body>

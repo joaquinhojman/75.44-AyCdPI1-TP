@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home2.css') }}">
+</head>
+
+
+<body>
+    <div class="form">
+        <a href="#">
+            <img src="{{ url_for('static', path='careapp_logo.jpg') }}" alt="CareApp Logo">
+        </a>
+        <h1 class="section-name">Welcome to CareApp!</h1>
+
+        <p class="empty-message">
+            Calling all pet-loving homeowners! 🐾🏡
+        </p>
+        <p class="empty-message">
+            Share the love and warmth of your home with fellow animal enthusiasts by becoming a part of our
+            pet-friendly community.
+        </p>
+        <p class="empty-message">
+            Publish your home with pets and embark on unforgettable experiences for both humans and their furry
+                friends.
+        </p>
+        <p class="empty-message">
+            Click the buttons below and start spreading joy, one wagging tail at a time! 🐶❤️🐱
+        </p>
+        <a href="{{ url_for('my_home') }}">
+            <button class="button">
+                <span class="button-text">Publish Home 🚀</span>
+            </button>
+        </a>
+        <a href="{{ url_for('view_my_homes') }}">
+            <button class="button">
+                <span class="button-text">View my homes 🏘️ </span>
+            </button>
+        </a>
+        <a href="{{ url_for('search_homes') }}">
+            <button class="button">
+                <span class="button-text">Search homes 🔎</span>
+            </button>
+        </a>
+        <a href="{{ url_for('profile') }}">
+            <button class="button">
+                <span class="button-text">Profile 👤</span>
+            </button>
+        </a>
+    </div>
+</body>

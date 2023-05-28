@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Care App</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home2.css') }}">
 </head>
 <script>
     async function accept_application(application_id) {
@@ -32,28 +32,36 @@
 </script>
 
 <body class="body-applications">
+<div class="form">
 <h2> Estas son las solicitudes para cuidar tu casa. </h2>
 <div>
     <ul>
         {% for application in applications %}
-            <li class="li_usuarios">
-            <li><b>Aplicante: {{ application[0] }}</b></li>
-            <li>Description: {{ application[2] }}</li>
-            <li>Age: {{ application[4] }}</li>
-            <li>Country: {{ application[3] }}</li>
-            </li>
+        <li class="house">
+            <div style="display: flex; margin-top:1rem;">
+            <label><b>Aplicante:  &nbsp;</b></label> <p>{{ application[0] }}</p> </div>
+            <div style="display: flex;">
+            <label>Description:  &nbsp;</label> <p>{{ application[2] }}</p></div>
+            <div style="display: flex;">
+            <label>Age: &nbsp; </label> <p>{{ application[4] }}</p></div>
+            <div style="display: flex;">
+            <label>Country:  &nbsp;</label> <p>{{ application[3] }}</p></div>
+            <div style="display: flex;">
             <a onclick="accept_application('{{ application[1] }}')">
                 <button class="button">
                     <span class="button-text">Aceptar</span>
                 </button>
             </a>
             <a onclick="reject_application('{{ application[1] }}')" >
-                <button class="button">
+                <button class="button" style="margin-left:1rem;">
                     <span class="button-text">Rechazar</span>
                 </button>
             </a>
+            </div>
+        </li>
         {% endfor %}
     </ul>
+</div>
 </div>
 </body>
 </html>

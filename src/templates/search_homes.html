@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home2.css') }}">
+</head>
+<script>
+    function validateForm() {
+        return true;
+    }
+</script>
+
+<body>
+    <div class="form">
+        <h1>Other Homes</h1>
+            {% set other_houses = houses | selectattr(4, '!=', user_id) | list %}
+            <ul>
+                {% for name in other_houses %}
+                    <li class="house">
+                        <div style="display: flex; margin-top:1rem;">
+                            <label>Start Date: &nbsp;</label> <p>{{ name[2] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>End Date: &nbsp;</label> <p>{{ name[3] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>City: &nbsp;</label> <p>{{ name[5] }}</p>
+                        </div>
+                        <a href="{{ url_for('house_details', house_id=name[0]) }}">
+                            <button class="button">
+                                <span class="button-text">View details</span>
+                            </button>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+</body>
