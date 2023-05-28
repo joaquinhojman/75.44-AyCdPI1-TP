@@ -47,6 +47,14 @@
             <div style="display: flex;">
             <label>Country:  &nbsp;</label> <p>{{ application[3] }}</p></div>
             <div style="display: flex;">
+            <label>Mean rating:  &nbsp;</label> <p>{{ application[5] }}</p></div>
+            <label>Comentarios:  &nbsp;</label>
+            <ul>
+            {% for comentario in application[6] %} 
+                <li style='margin-left: 40px;'>{{ comentario }}</li>
+            {% endfor %}
+            </ul>
+            <div style="display: flex;">
             <a onclick="accept_application('{{ application[1] }}')">
                 <button class="button">
                     <span class="button-text">Aceptar</span>

@@ -45,7 +45,13 @@ async def applications(request: Request, response_class=HTMLResponse, user_id: s
     usernames = []
     for app in applications:
         user = db.query(models.User).filter(models.User.user_id == app.user_id).first()
-        usernames.append((user.username, app.user_application_id, user.description, user.country, user.age))
+        user_ratings = db.query(models.Ratings).filter(models.Ratings.user_id == str(app.user_id)).all()
+        mean_user_rating = 0 if not user_ratings else sum((rating for rating in list(map(lambda u: u.rating, user_ratings)))) / len(user_ratings)
+        comments = list(map(lambda u: u.comment, user_ratings))
+        print(comments)
+        comments = comments[:min(len(comments), 5)]
+        print(comments)
+        usernames.append((user.username, app.user_application_id, user.description, user.country, user.age, mean_user_rating, comments))
     
     return templates.TemplateResponse("applications.html", {"request": request, "applications": usernames,
                                                             "user_id": user_id})
