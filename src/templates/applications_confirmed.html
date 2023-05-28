@@ -4,6 +4,18 @@
     <title>Care App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='house_details.css') }}">
 </head>
+<script>
+    async function rate_applicant (user_id, house_id) {
+        const _response = await fetch("/application/rate_applicant", {
+            method: 'POST',
+            headers: {
+                 "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "rate": rate }),
+        })
+        location.reload();
+    }
+</script>
 
 <body>
     <div class="form-container">
@@ -25,6 +37,11 @@
                 <label>Description:</label>
                 {{ user.description }}
             </div>
+        </form>
+        <form method="POST" action="{{ url_for('rate_applicant', user_id=user.user_id, house_id=house_id) }}">
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" value={{rating}} required>
+            <button type="submit">Rate your applicant!</button>
         </form>
     </div>
 </body>

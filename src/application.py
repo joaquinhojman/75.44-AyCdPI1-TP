@@ -5,7 +5,7 @@ import starlette.status
 
 import models
 from pydantic import BaseModel
-from fastapi import APIRouter, Request, Depends, HTTPException
+from fastapi import APIRouter, Form, Request, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import get_db
 from fastapi.responses import HTMLResponse
@@ -58,8 +58,12 @@ async def applications_confirmed(request: Request, response_class=HTMLResponse, 
         models.UserApplication.accepted == True
     )).first()
     user = db.query(models.User).filter(models.User.user_id == application.user_id).first()
-    
-    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id})
+    rating = db.query(models.Ratings).filter(and_(models.Ratings.user_id == str(user.user_id), models.Ratings.house_id == str(house))).first()
+    if rating:
+        print(rating.rating)
+    else:
+        print("NOT RATED")
+    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id, "house_id": house, "rating": 0 if not rating else rating.rating})
 
 
 @router.post('/application/reject')
@@ -91,3 +95,20 @@ async def accept_application(application: ApplicationBase, db: Session = Depends
     db.flush()
     db.commit()
     print(house.available)
+
+
+@router.post('/rate_applicant/{user_id}/{house_id}')
+async def rate_applicant(request: Request, user_id, house_id, db: Session = Depends(get_db), rating = Form(...)):
+    row = db.query(models.Ratings).filter(models.Ratings.user_id == user_id).filter(models.Ratings.house_id == house_id).first()
+    if row:
+        row.rating = rating
+    else:
+        db.add(models.Ratings(
+            user_id=user_id,
+            house_id=house_id,
+            rating=rating,
+            comment='TU VIEJA'))
+    db.commit()
+
+    redirect_url = request.url_for('applications_confirmed', house=house_id)
+    return RedirectResponse(redirect_url, status_code=starlette.status.HTTP_302_FOUND)

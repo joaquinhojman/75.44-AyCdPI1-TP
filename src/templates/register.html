@@ -7,12 +7,14 @@
 <script>
     function validateForm() {
         var email = document.getElementById("email").value;
+        // if (false) {
         if (!email.includes("@") || !email.includes(".")) {
             error_msg.innerHTML = "Invalid email address!";
             return false;
         }
         var password = document.getElementById("password").value;
         var confirm_password = document.getElementById("confirm_password").value;
+        // if (false) {
         if (password.length < 8) {
             error_msg.innerHTML = "Password must be at least 8 characters long!";
             return false;

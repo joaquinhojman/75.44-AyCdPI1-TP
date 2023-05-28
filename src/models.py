@@ -48,3 +48,12 @@ class Pet(Base):
 class Animal(Base):
     __tablename__ = 'Animal'
     animal_id = Column(String, primary_key=True)
+
+
+class Ratings(Base):
+    __tablename__ = 'Ratings'
+
+    user_id = Column(String, primary_key=True)
+    house_id = Column(String, primary_key=True)
+    rating = Column(Integer)
+    comment = Column(String)
