@@ -32,34 +32,38 @@
         <h1>This is the full information for the house:</h1>
         <form>
             <div class="description">
-                <label>Description:</label>
+                <label style="margin-top: 5px;">Description:</label>
                 {{ house.description }}
             </div>
             <div class="start-date">
-                <label>Start Date:</label>
+                <label style="margin-top: 5px;">Start Date:</label>
                 {{ house.start_date }}
             </div>
             <div class="end-date">
-                <label>End Date:</label>
+                <label style="margin-top: 5px;">End Date:</label>
                 {{ house.end_date }}
             </div>
             <div class="description">
-                <label>City:</label>
+                <label style="margin-top: 5px;">City:</label>
                 {{ house.city }}
             </div>
             <div class="description">
-                <label>Rooms:</label>
+                <label style="margin-top: 5px;">Rooms:</label>
                 {{ house.rooms }}
             </div>
-            <label> Mascotas: </label>
-            <ul>
-            {% for name in pets %}
-            <div>
-                <li>{{ name[0] }}. </li>
-                {{ name[1] }}
-            </div>
-            {% endfor %}
-
+            <table style="margin-top: 5px;">
+                <tr>
+                  <th>Mascota</th>
+                  <th>Cantidad</th>
+                </tr>
+                {% for name in pets %}
+                    <tr>
+                        <td>{{ name[0] }}</td>
+                        <td>{{ name[1] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
             {% if house.image1 %}
                 <img src="{{house.image1}}" alt="Imagen1">
             {% endif %}

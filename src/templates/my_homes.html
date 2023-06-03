@@ -32,12 +32,18 @@
                         <div style="display: flex;">
                             <label>Rooms: &nbsp;</label> <p> {{ name[6] }}</p>
                         </div>
-                        {% for name in name[8] %}
-                        <label> Mascotas: </label>
-                        <div style="display: flex;">
-                            <label>{{ name[0] }}. Cantidad: &nbsp;</label> <p> {{ name[1] }}</p>
-                        </div>
-                        {% endfor %}
+                        <table>
+                            <tr>
+                              <th>Mascota</th>
+                              <th>Cantidad</th>
+                            </tr>
+                            {% for name in name[8] %}
+                                <tr>
+                                    <td>{{ name[0] }}</td>
+                                    <td>{{ name[1] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                         {% if name[7] %}
                         <a href="{{ url_for('applications', house=name[0]) }}">
                             <button class="button">

@@ -10,6 +10,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from functools import reduce
 
+from datetime import datetime
+
 templates = Jinja2Templates(directory="./templates")
 
 router = APIRouter(
@@ -56,12 +58,17 @@ def profile(request: Request, response_class=HTMLResponse, db: Session = Depends
         .first()
     return templates.TemplateResponse("profile.html", {"request": request, "user_id": user_id, "user": user})
 
+def formatFecha(fecha):
+    fecha = datetime.strptime(str(fecha), "%Y-%m-%d %H:%M:%S")
+    formato = fecha.strftime("%A, %B %d %Y")
+    return formato
+
 @router.get("/view_my_homes")
 def view_my_homes(request: Request, response_class=HTMLResponse, db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
     houses = db.query(models.House).filter(or_(
             models.House.available==True, models.House.owner_id == user_id
         )).all()
-    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id, h.city, h.rooms, h.available), houses))
+    houses = list(map(lambda h: (h.house_id, h.description, formatFecha(h.start_date), formatFecha(h.end_date), h.owner_id, h.city, h.rooms, h.available), houses))
 
     new_houses = []
     for house in houses:
@@ -76,7 +83,7 @@ def search_homes(request: Request, response_class=HTMLResponse, db: Session = De
     houses = db.query(models.House).filter(or_(
             models.House.available==True, models.House.owner_id == user_id
         )).all()
-    houses = list(map(lambda h: (h.house_id, h.description, h.start_date, h.end_date, h.owner_id, h.city, h.rooms, h.available), houses))
+    houses = list(map(lambda h: (h.house_id, h.description, formatFecha(h.start_date), formatFecha(h.end_date), h.owner_id, h.city, h.rooms, h.available), houses))
 
     new_houses = []
     for house in houses:
@@ -91,5 +98,7 @@ async def house_details(request: Request, response_class=HTMLResponse, house_id:
     house = db.query(models.House).filter(models.House.house_id == house_id).first()
     pets = db.query(models.Pet).filter(models.Pet.house_id == house_id).all()
     pets_list = list(map(lambda p: (p.animal_id, p.pet_cant), pets))
+    house.start_date = formatFecha(house.start_date)
+    house.end_date = formatFecha(house.end_date)
 
     return templates.TemplateResponse("house_details.html", {"request": request, "house": house, "pets": pets_list})

@@ -40,7 +40,39 @@
         </form>
         <form method="POST" action="{{ url_for('rate_applicant', user_id=user.user_id, house_id=house_id) }}">
             <label for="rating">Rating:</label>
-            <input type="number" id="rating" name="rating" value={{rating.rating}} required>
+            <div class="rate">
+                {% if rating.rating == 5 %} 
+                <input type="radio" id="star5" name="rating" value="5" checked/>
+                {% else %}
+                <input type="radio" id="star5" name="rating" value="5" />
+                {% endif %}
+                <label for="star5" title="text">5 stars</label>
+                {% if rating.rating == 4 %} 
+                <input type="radio" id="star4" name="rating" value="4" checked/>
+                {% else %}
+                <input type="radio" id="star4" name="rating" value="4" />
+                {% endif %}
+                <label for="star4" title="text">4 stars</label>
+                {% if rating.rating == 3 %} 
+                <input type="radio" id="star3" name="rating" value="3" checked/>
+                {% else %}
+                <input type="radio" id="star3" name="rating" value="3" />
+                {% endif %}
+                <label for="star3" title="text">3 stars</label>
+                {% if rating.rating == 2 %} 
+                <input type="radio" id="star2" name="rating" value="2" checked/>
+                {% else %}
+                <input type="radio" id="star2" name="rating" value="2" />
+                {% endif %}
+                <label for="star2" title="text">2 stars</label>
+                {% if rating.rating == 1 %} 
+                <input type="radio" id="star1" name="rating" value="1" checked/>
+                {% else %}
+                <input type="radio" id="star1" name="rating" value="1" />
+                {% endif %}
+                <label for="star1" title="text">1 star</label>
+            </div>
+            <!-- <input type="number" id="rating" name="rating" value={{rating.rating}} required> -->
             {% if rating.comment %}
                 <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant...">{{rating.comment}}</textarea>
             {% else %}
