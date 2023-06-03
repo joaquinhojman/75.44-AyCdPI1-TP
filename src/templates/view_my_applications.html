@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='home2.css') }}">
+</head>
+
+<body>
+    <div class="form">
+        <h1>My Applications</h1>
+            <ul>
+                {% for application in applications %}
+                    <li class="house">
+                        <div style="display: flex; margin-top:1rem;">
+                            <label>Description: &nbsp;</label> <p>{{ application[1] }}</p>
+                        </div>
+                        <div style="display: flex; margin-top:1rem;">
+                            <label>Start Date: &nbsp;</label> <p>{{ application[2] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>End Date: &nbsp;</label> <p>{{ application[3] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            <label>City: &nbsp;</label> <p>{{ application[4] }}</p>
+                        </div>
+                        <div style="display: flex;">
+                            {% if application[0] == True %}
+                                <label>Estado: &nbsp;</label> <p><b> Aceptada </b></p>
+                            {% elif application[0] == False %}
+                                <label>Estado: &nbsp;</label> <p><b> Rechazada </b></p>
+                            {% else %}
+                                <label>Estado: &nbsp;</label> <p><b> Pendiente </b></p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+</body>

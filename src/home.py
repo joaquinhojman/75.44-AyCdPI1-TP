@@ -102,3 +102,16 @@ async def house_details(request: Request, response_class=HTMLResponse, house_id:
     house.end_date = formatFecha(house.end_date)
 
     return templates.TemplateResponse("house_details.html", {"request": request, "house": house, "pets": pets_list})
+
+@router.get('/view_my_applications')
+async def view_my_applications(request: Request, response_class=HTMLResponse, user_id: str = Depends(get_current_user), db: Session = Depends(get_db)):
+    applications = db.query(models.UserApplication).filter(models.UserApplication.user_id == user_id).all()
+    applications = list(map(lambda h: (h.user_application_id, h.user_id, h.house_id, h.accepted), applications))
+
+    new_applications = []
+    for application in applications:
+        house = db.query(models.House).filter(models.House.house_id == application[2]).first()
+        new_applications.append((application[3], house.description, formatFecha(house.start_date), formatFecha(house.end_date), house.city))
+    
+    print(new_applications)
+    return templates.TemplateResponse("view_my_applications.html", {"request": request, "applications": new_applications})
