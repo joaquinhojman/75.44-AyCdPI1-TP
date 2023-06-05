@@ -1,4 +1,4 @@
-from operator import or_
+from operator import or_, and_
 import models
 from sqlalchemy.orm import Session
 
@@ -111,7 +111,8 @@ async def view_my_applications(request: Request, response_class=HTMLResponse, us
     new_applications = []
     for application in applications:
         house = db.query(models.House).filter(models.House.house_id == application[2]).first()
-        new_applications.append((application[3], house.description, formatFecha(house.start_date), formatFecha(house.end_date), house.city))
-    
+        rating = db.query(models.RatingsHouses).filter(and_(models.RatingsHouses.house_id == str(house.house_id), models.RatingsHouses.user_id == str(user_id))).first()
+        new_applications.append((application[3], house.description, formatFecha(house.start_date), formatFecha(house.end_date), house.city, house.house_id, rating.rating if rating != None else None, rating.comment if rating != None else None))
+
     print(new_applications)
     return templates.TemplateResponse("view_my_applications.html", {"request": request, "applications": new_applications})

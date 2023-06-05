@@ -115,3 +115,20 @@ async def rate_applicant(request: Request, user_id, house_id, db: Session = Depe
 
     redirect_url = request.url_for('applications_confirmed', house=house_id)
     return RedirectResponse(redirect_url, status_code=starlette.status.HTTP_302_FOUND)
+
+@router.post('/rate_home/{house_id}')
+async def rate_home(request: Request, house_id, user_id: str = Depends(get_current_user), db: Session = Depends(get_db), rating = Form(...), comment = Form(None)):
+    row = db.query(models.RatingsHouses).filter(models.RatingsHouses.user_id == str(user_id)).filter(models.RatingsHouses.house_id == str(house_id)).first()
+    if row:
+        row.rating = rating
+        if comment:
+            row.comment = comment
+    else:
+        db.add(models.RatingsHouses(
+            user_id=user_id,
+            house_id=house_id,
+            rating=rating,
+            comment=comment))
+    db.commit()
+    redirect_url = request.url_for('view_my_applications')
+    return RedirectResponse(redirect_url, status_code=starlette.status.HTTP_302_FOUND)

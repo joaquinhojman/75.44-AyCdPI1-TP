@@ -57,3 +57,11 @@ class Ratings(Base):
     house_id = Column(String, primary_key=True)
     rating = Column(Integer)
     comment = Column(String)
+
+class RatingsHouses(Base):
+    __tablename__ = 'RatingsHouses'
+
+    user_id = Column(String, primary_key=True)
+    house_id = Column(String, primary_key=True)
+    rating = Column(Integer)
+    comment = Column(String)

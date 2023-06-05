@@ -33,6 +33,50 @@
                             {% endif %}
                         </div>
                     </li>
+
+                    {% if application[0] == True %}
+                        <form method="POST" action="{{ url_for('rate_home',  house_id=application[5]) }}">
+                            <label for="rating">Rating:</label>
+                            <div class="rate">
+                                {% if application[6] == 5 %} 
+                                <input type="radio" id="star5" name="rating" value="5" checked/>
+                                {% else %}
+                                <input type="radio" id="star5" name="rating" value="5" />
+                                {% endif %}
+                                <label for="star5" title="text">5 stars</label>
+                                {% if application[6] == 4 %} 
+                                <input type="radio" id="star4" name="rating" value="4" checked/>
+                                {% else %}
+                                <input type="radio" id="star4" name="rating" value="4" />
+                                {% endif %}
+                                <label for="star4" title="text">4 stars</label>
+                                {% if application[6] == 3 %} 
+                                <input type="radio" id="star3" name="rating" value="3" checked/>
+                                {% else %}
+                                <input type="radio" id="star3" name="rating" value="3" />
+                                {% endif %}
+                                <label for="star3" title="text">3 stars</label>
+                                {% if application[6] == 2 %} 
+                                <input type="radio" id="star2" name="rating" value="2" checked/>
+                                {% else %}
+                                <input type="radio" id="star2" name="rating" value="2" />
+                                {% endif %}
+                                <label for="star2" title="text">2 stars</label>
+                                {% if application[6] == 1 %} 
+                                <input type="radio" id="star1" name="rating" value="1" checked/>
+                                {% else %}
+                                <input type="radio" id="star1" name="rating" value="1" />
+                                {% endif %}
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                            {% if application[7] %}
+                                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant...">{{application[7]}}</textarea>
+                            {% else %}
+                                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant..."></textarea>
+                            {% endif %}
+                            <button type="submit">Rate your applicant!</button>
+                        </form>
+                    {% endif %}
                 {% endfor %}
             </ul>
     </div>
