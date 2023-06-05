@@ -15,6 +15,18 @@
         }
         return true;
     }
+
+    function increment(id) {
+      let input = document.getElementById(id);
+      input.value = parseInt(input.value) + 1;
+    }
+
+    function decrement(id) {
+      let input = document.getElementById(id);
+      if (parseInt(input.value) == 0) return;
+      input.value = parseInt(input.value) - 1;
+    }
+
 </script>
   <body>
     <h1>House description form</h1>
@@ -27,7 +39,12 @@
       <input type="date" id="end_date" name="end_date" required>
       
       <label for="rooms">Rooms:</label>
-      <input type="number" style="border-radius: 5px;" id="room" name="room" min="0" max="99" required>
+      <div class="input-wrapper">
+        <button type="button" class="btn" onclick="decrement('room')">-</button>
+        <input class="check-animal" id="room" name="room" min="0" max="99" value="0" required>
+        <button type="button" class="btn" onclick="increment('room')">+</button>
+      </div>
+
 
       <label for="city" >City:</label>
       <input id="city" style="border-radius: 5px;" name="city" required>
@@ -38,8 +55,11 @@
       {% for name in animals %}
       <div>
         <label class="check-animal">{{ name }}</label>
-        <label class="check-animal">Cantidad: </label>
-        <input class="check-animal" type="number" name="{{name}}_cant" min="0" max="10" id="{{name}}_cant" value="0">
+        <div class="input-wrapper">
+          <button type="button" class="btn" onclick="decrement('{{name}}_cant')">-</button>
+          <input class="check-animal" name="{{name}}_cant" min="0" max="10" id="{{name}}_cant" value="0" required>
+          <button type="button" class="btn" onclick="increment('{{name}}_cant')">+</button>
+        </div>
         {% if name == "Otro" %}
         <p style="font-size:13px; margin-bottom: 5px;">*En caso de agregar Otros animales, especificar en la descripción de la casa.</p>
         {% endif %} 
