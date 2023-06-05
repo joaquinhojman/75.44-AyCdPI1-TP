@@ -25,12 +25,12 @@ async def create_home(request: Request,
                       Gato_cant: str = Form(...),
                       Ave_cant: str = Form(...),
                       Pez_cant: str = Form(...),
-                      Araña_cant: str = Form(...),
-                      Serpiente_cant: str = Form(...),
-                      Huron_cant: str = Form(...),
-                      Erizo_cant: str = Form(...),
-                      Morsa_cant: str = Form(...),
-                      Carpincho_cant: str = Form(...),
+                      #Araña_cant: str = Form(...),
+                      #Serpiente_cant: str = Form(...),
+                      #Huron_cant: str = Form(...),
+                      #Erizo_cant: str = Form(...),
+                      #Morsa_cant: str = Form(...),
+                      #Carpincho_cant: str = Form(...),
                       Otro_cant: str = Form(...),
                       image1: str = Form(None),
                       image2: str = Form(None),
@@ -43,12 +43,12 @@ async def create_home(request: Request,
     pets['Gato'] = Gato_cant
     pets['Ave'] = Ave_cant
     pets['Pez'] = Pez_cant
-    pets['Araña'] = Araña_cant
-    pets['Serpiente'] = Serpiente_cant
-    pets['Huron'] = Huron_cant
-    pets['Erizo'] = Erizo_cant
-    pets['Morsa'] = Morsa_cant
-    pets['Carpincho'] = Carpincho_cant
+    #pets['Araña'] = Araña_cant
+    #pets['Serpiente'] = Serpiente_cant
+    #pets['Huron'] = Huron_cant
+    #pets['Erizo'] = Erizo_cant
+    #pets['Morsa'] = Morsa_cant
+    #pets['Carpincho'] = Carpincho_cant
     pets['Otro'] = Otro_cant
     
     try:

@@ -27,10 +27,10 @@
       <input type="date" id="end_date" name="end_date" required>
       
       <label for="rooms">Rooms:</label>
-      <input type="number" id="room" name="room" required>
+      <input type="number" style="border-radius: 5px;" id="room" name="room" min="0" max="99" required>
 
-      <label for="city">City:</label>
-      <input id="city" name="city" required>
+      <label for="city" >City:</label>
+      <input id="city" style="border-radius: 5px;" name="city" required>
 
       <label for="pet"> Pets: </label>
 
@@ -40,6 +40,9 @@
         <label class="check-animal">{{ name }}</label>
         <label class="check-animal">Cantidad: </label>
         <input class="check-animal" type="number" name="{{name}}_cant" min="0" max="10" id="{{name}}_cant" value="0">
+        {% if name == "Otro" %}
+        <p style="font-size:13px; margin-bottom: 5px;">*En caso de agregar Otros animales, especificar en la descripción de la casa.</p>
+        {% endif %} 
       </div>
       {% endfor %}
       </div>
@@ -48,11 +51,11 @@
       <textarea id="description" name="description" required rows="5" cols="50"></textarea>
 
       <label for="imagen">Podes subir hasta 5 imagenes!</label>
-      <input name="image1" id="image1" accept="image/*" value="">  
-      <input name="image2" id="image2" accept="image/*" value="">  
-      <input name="image3" id="image3" accept="image/*" value="">  
-      <input name="image4" id="image4" accept="image/*" value="">  
-      <input name="image5" id="image5" accept="image/*" value="">
+      <input name="image1" id="image1" accept="image/*" value="" style="border-radius: 5px;">  
+      <input name="image2" id="image2" accept="image/*" value="" style="border-radius: 5px;">  
+      <input name="image3" id="image3" accept="image/*" value="" style="border-radius: 5px;">  
+      <input name="image4" id="image4" accept="image/*" value="" style="border-radius: 5px;">  
+      <input name="image5" id="image5" accept="image/*" value="" style="border-radius: 5px;">
 
       <div id="error_msg" style="color: red;"></div>
       <button type="submit">Publish</button>

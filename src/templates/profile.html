@@ -17,11 +17,19 @@
             <h1> My Profile </h1>
             <form method="POST" action="{{ url_for('edit') }}" onsubmit="return validateForm()">
                 <label for="country">Country:</label>
-                <input type="text" id="country" name="country" value={{user.country}} required>
+                {% if user.country %}
+                    <input type="text" id="country" name="country" rows="5" cols="50" value="{{user.country}}" required>
+                {% else %}
+                    <input type="text" id="country" name="country" rows="5" cols="50" placeholder="Set your country..." required>
+                {% endif %}
                 <label for="age">Age:</label>
-                <input type="number" id="age" name="age" value={{user.age}} required>
+                <input type="number" id="age" name="age" value={{user.age}} min="0" max="99" style="border-radius: 5px;" required>
                 <label for="description">Description:</label>
-                <textarea type="text" id="description" name="description" rows="5" cols="50" required>{{user.description}}</textarea>
+                {% if user.description %}
+                    <textarea type="text" id="description" name="description" rows="5" cols="50" required>{{user.description}} </textarea>
+                {% else %}
+                    <textarea type="text" id="description" name="description" rows="5" cols="50" placeholder="Leave some words of you..." required></textarea>
+                {% endif %}
                 <button class="button">
                     <span class="button-text">Edit</span>
                 </button>
