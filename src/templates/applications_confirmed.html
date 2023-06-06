@@ -25,18 +25,24 @@
                 <label>Aplicante:</label>
                 {{ user.username }}
             </div>
-            <div class="description">
-                <label>Country:</label>
-                {{ user.country }}
-            </div>
+            {% if user.country != None %} 
+                <div class="description">
+                    <label>Country:</label>
+                    {{ user.country }}
+                </div>
+            {% endif %}
+            {% if user.age != None %} 
             <div class="description">
                 <label>Age:</label>
                 {{ user.age }}
             </div>
+            {% endif %}
+            {% if user.description != None %} 
             <div class="description">
                 <label>Description:</label>
                 {{ user.description }}
             </div>
+            {% endif %}
         </form>
         <form method="POST" action="{{ url_for('rate_applicant', user_id=user.user_id, house_id=house_id) }}">
             <label for="rating">Rating:</label>

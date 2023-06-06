@@ -41,19 +41,33 @@
             <div style="display: flex; margin-top:1rem;">
             <label><b>Aplicante:  &nbsp;</b></label> <p>{{ application[0] }}</p> </div>
             <div style="display: flex;">
-            <label>Description:  &nbsp;</label> <p>{{ application[2] }}</p></div>
+            {% if application[2] != None %} 
+                <label>Description:  &nbsp;</label> <p>{{ application[2] }}</p>
+            {% endif %}
+            </div>
             <div style="display: flex;">
-            <label>Age: &nbsp; </label> <p>{{ application[4] }}</p></div>
+            {% if application[4] != None %} 
+            <label>Age: &nbsp; </label> <p>{{ application[4] }}</p>
+            {% endif %}
+            </div>
             <div style="display: flex;">
-            <label>Country:  &nbsp;</label> <p>{{ application[3] }}</p></div>
-            <div style="display: flex;">
-            <label>Mean rating:  &nbsp;</label> <p>{{ application[5] }}</p></div>
+            {% if application[3] != None %} 
+            <label>Country:  &nbsp;</label> <p>{{ application[3] }}</p>
+            {% endif %}
+            </div>
+            {% if application[5] != 0 %} 
+            <label>Mean rating:  &nbsp;</label> <p>{{ application[5] }}</p> 
+            </div>
             <label>Comentarios:  &nbsp;</label>
             <ul>
-            {% for comentario in application[6] %} 
-                <li style='margin-left: 40px;'>{{ comentario }}</li>
-            {% endfor %}
+                {% for comentario in application[6] %} 
+                    <li style='margin-left: 40px;'>{{ comentario }}</li>
+                {% endfor %}
             </ul>
+            {% else %}
+            <label>Mean rating:  &nbsp;</label>
+            <p>User has not been ratings yet</p>
+            {% endif %}
             <div style="display: flex;">
             <a onclick="accept_application('{{ application[1] }}')">
                 <button class="button">

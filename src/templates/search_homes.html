@@ -26,6 +26,13 @@
                         <div style="display: flex;">
                             <label>City: &nbsp;</label> <p>{{ name[5] }}</p>
                         </div>
+                        <label>House owner mean rating:  &nbsp;</label> <p>{{ name[9] }}</p>
+                        <label>Comments:  &nbsp;</label>
+                        <ul>
+                        {% for comentario in name[10] %} 
+                            <li style='margin-left: 40px;'>{{ comentario }}</li>
+                        {% endfor %}
+                        </ul>
                         <a href="{{ url_for('house_details', house_id=name[0]) }}">
                             <button class="button">
                                 <span class="button-text">View details</span>

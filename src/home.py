@@ -89,7 +89,22 @@ def search_homes(request: Request, response_class=HTMLResponse, db: Session = De
     for house in houses:
         pets = db.query(models.Pet).filter(models.Pet.house_id == house[0]).all()
         pets_list = list(map(lambda p: (p.animal_id, p.pet_cant), pets))
-        new_houses.append((*house, [*pets_list]))
+
+        owner_id = house[4]
+        owner_houses = db.query(models.House).filter(models.House.owner_id == str(owner_id)).all()
+        owner_houses = list(map(lambda h: h.house_id, owner_houses))
+        ratings = []
+        comments = []
+        for owner_house in owner_houses:
+            rating = db.query(models.RatingsHouses).filter(models.RatingsHouses.house_id == str(owner_house)).all()
+            house_comments = list(map(lambda u: u.comment, rating))
+            house_ratings = list(map(lambda u: u.rating, rating))
+            ratings.extend(house_ratings)
+            comments.extend(house_comments)
+
+        mean_user_rating = 0 if not ratings else sum(ratings) / len(ratings)
+        comments = comments[:min(len(comments), 5)]
+        new_houses.append((*house, [*pets_list], mean_user_rating, [*comments]))
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
     return templates.TemplateResponse("search_homes.html", {"request": request, "houses": new_houses, "user_id": user_id, "user": user})
 

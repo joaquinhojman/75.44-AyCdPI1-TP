@@ -39,40 +39,40 @@
                             <label for="rating">Rating:</label>
                             <div class="rate">
                                 {% if application[6] == 5 %} 
-                                <input type="radio" id="star5" name="rating" value="5" checked/>
+                                <input type="radio" id="star5_{{application[5]}}" name="rating" value="5" checked/>
                                 {% else %}
-                                <input type="radio" id="star5" name="rating" value="5" />
+                                <input type="radio" id="star5_{{application[5]}}" name="rating" value="5" />
                                 {% endif %}
-                                <label for="star5" title="text">5 stars</label>
+                                <label for="star5_{{application[5]}}" title="text">5 stars</label>
                                 {% if application[6] == 4 %} 
-                                <input type="radio" id="star4" name="rating" value="4" checked/>
+                                <input type="radio" id="star4_{{application[5]}}" name="rating" value="4" checked/>
                                 {% else %}
-                                <input type="radio" id="star4" name="rating" value="4" />
+                                <input type="radio" id="star4_{{application[5]}}" name="rating" value="4" />
                                 {% endif %}
-                                <label for="star4" title="text">4 stars</label>
+                                <label for="star4_{{application[5]}}" title="text">4 stars</label>
                                 {% if application[6] == 3 %} 
-                                <input type="radio" id="star3" name="rating" value="3" checked/>
+                                <input type="radio" id="star3_{{application[5]}}" name="rating" value="3" checked/>
                                 {% else %}
-                                <input type="radio" id="star3" name="rating" value="3" />
+                                <input type="radio" id="star3_{{application[5]}}" name="rating" value="3" />
                                 {% endif %}
-                                <label for="star3" title="text">3 stars</label>
+                                <label for="star3_{{application[5]}}" title="text">3 stars</label>
                                 {% if application[6] == 2 %} 
-                                <input type="radio" id="star2" name="rating" value="2" checked/>
+                                <input type="radio" id="star2_{{application[5]}}" name="rating" value="2" checked/>
                                 {% else %}
-                                <input type="radio" id="star2" name="rating" value="2" />
+                                <input type="radio" id="star2_{{application[5]}}" name="rating" value="2" />
                                 {% endif %}
-                                <label for="star2" title="text">2 stars</label>
+                                <label for="star2_{{application[5]}}" title="text">2 stars</label>
                                 {% if application[6] == 1 %} 
-                                <input type="radio" id="star1" name="rating" value="1" checked/>
+                                <input type="radio" id="star1_{{application[5]}}" name="rating" value="1" checked/>
                                 {% else %}
-                                <input type="radio" id="star1" name="rating" value="1" />
+                                <input type="radio" id="star1_{{application[5]}}" name="rating" value="1" />
                                 {% endif %}
-                                <label for="star1" title="text">1 star</label>
+                                <label for="star1_{{application[5]}}" title="text">1 star</label>
                             </div>
                             {% if application[7] %}
-                                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant...">{{application[7]}}</textarea>
+                                <textarea type="text" id="comment_{{application[5]}}" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant...">{{application[7]}}</textarea>
                             {% else %}
-                                <textarea type="text" id="comment" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant..."></textarea>
+                                <textarea type="text" id="comment_{{application[5]}}" name="comment" rows="5" cols="50" placeholder="Leave some words for your caring applicant..."></textarea>
                             {% endif %}
                             <button type="submit">Rate your applicant!</button>
                         </form>
