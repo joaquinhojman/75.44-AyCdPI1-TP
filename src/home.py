@@ -131,3 +131,56 @@ async def view_my_applications(request: Request, response_class=HTMLResponse, us
 
     print(new_applications)
     return templates.TemplateResponse("view_my_applications.html", {"request": request, "applications": new_applications})
+
+
+@router.post('/search_with_filter')
+async def search_with_filter(request: Request,
+                    start_date: str = Form(None),
+                    end_date: str = Form(None),
+                    city: str = Form(None),
+                    pet: str = Form(None),
+                    db: Session = Depends(get_db),
+                    user_id: str = Depends(get_current_user)):
+    query = db.query(models.House).filter(models.House.available==True)
+        
+    if start_date is not None:
+        start_datetime = datetime.strptime(start_date, "%Y-%m-%d")
+        query = query.filter(models.House.start_date >= start_datetime)
+
+    if end_date is not None:
+        end_datetime = datetime.strptime(end_date, "%Y-%m-%d")
+        query = query.filter(models.House.end_date <= end_datetime)
+
+    if city is not None:
+        query = query.filter(models.House.city.ilike(f"%{city}%"))
+    
+    if pet is not None:
+        query = query.join(models.Pet, models.House.house_id == models.Pet.house_id).filter(models.Pet.animal_id == pet)
+    
+    result = query.all()
+    
+    houses = list(map(lambda h: (h.house_id, h.description, formatFecha(h.start_date), formatFecha(h.end_date), h.owner_id, h.city, h.rooms, h.available), result))
+    print(houses)
+
+    new_houses = []
+    for house in houses:
+        pets = db.query(models.Pet).filter(models.Pet.house_id == house[0]).all()
+        pets_list = list(map(lambda p: (p.animal_id, p.pet_cant), pets))
+
+        owner_id = house[4]
+        owner_houses = db.query(models.House).filter(models.House.owner_id == str(owner_id)).all()
+        owner_houses = list(map(lambda h: h.house_id, owner_houses))
+        ratings = []
+        comments = []
+        for owner_house in owner_houses:
+            rating = db.query(models.RatingsHouses).filter(models.RatingsHouses.house_id == str(owner_house)).all()
+            house_comments = list(map(lambda u: u.comment, rating))
+            house_ratings = list(map(lambda u: u.rating, rating))
+            ratings.extend(house_ratings)
+            comments.extend(house_comments)
+
+        mean_user_rating = 0 if not ratings else sum(ratings) / len(ratings)
+        comments = comments[:min(len(comments), 5)]
+        new_houses.append((*house, [*pets_list], mean_user_rating, [*comments]))
+    user = db.query(models.User).filter(models.User.user_id == user_id).first()
+    return templates.TemplateResponse("search_with_filter.html", {"request": request, "houses": new_houses, "user_id": user_id, "user": user})

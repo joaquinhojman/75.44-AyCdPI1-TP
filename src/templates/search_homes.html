@@ -13,6 +13,46 @@
 <body>
     <div class="form">
         <h1>Other Homes</h1>
+        <form method="POST" action="{{ url_for('search_with_filter') }}">
+            <div style="background-color:#f5f5f5 !important; border-radius: 10px;">
+                <div style="width: 90%; padding-left: 5%; padding-top: 20px; padding-bottom: 20px;">
+                <h3> Customized search </h3>
+
+                <div style="display: flex;">
+                    <div>
+                    <label for="start_date">Start date:</label>
+                    <input type="date" id="start_date" style="width: 165px !important;" name="start_date">
+                    </div>
+
+                    <div style="padding-left: 10px;">
+                    <label for="end_date">End date:</label>
+                    <input type="date" id="end_date" style="width: 165px !important;" name="end_date">
+                    </div>
+                
+
+                    <div style="padding-left: 10px;">
+                    <label for="city" >City:</label>
+                    <input id="city" style="border-radius: 5px; height: 43px;" name="city">
+                    </div>
+            
+                    <div style="padding-left: 10px;">
+                    <label for="pet">Mascota:</label>
+                    <select name="pet" style="height: 43px; border-radius: 7px;">
+                        <option value="" disabled selected hidden>Select Pet</option>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Pez">Pez</option>
+                    </select>
+                    </div>
+
+                </div>
+                
+                <button type="submit" style="margin-top: 0px !important">Search!</button>
+                </div>
+            </div>
+            </form>
+
             {% set other_houses = houses | selectattr(4, '!=', user_id) | list %}
             <ul>
                 {% for name in other_houses %}
