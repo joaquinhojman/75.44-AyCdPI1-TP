@@ -29,8 +29,13 @@
 </script>
 <body>
     <div class="form-container">
-        <h1>This is the full information for the house:</h1>
         <form>
+            <a href="{{ url_for('search_homes') }}">
+                <button type="button" class="button">
+                    <span class="button-text">⬅️Back</span>
+                </button>
+            </a>
+            <h1>This is the full information for the house:</h1>
             <div class="description">
                 <label style="margin-top: 5px;">Description:</label>
                 {{ house.description }}

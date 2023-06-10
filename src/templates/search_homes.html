@@ -12,6 +12,12 @@
 
 <body>
     <div class="form">
+        <a href="{{ url_for('home') }}">
+            <button class="button">
+                <span class="button-text">⬅️Back</span>
+            </button>
+        </a>
+
         <h1>Other Homes</h1>
         <form method="POST" action="{{ url_for('search_with_filter') }}">
             <div style="background-color:#f5f5f5 !important; border-radius: 10px;">

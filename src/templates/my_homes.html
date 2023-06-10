@@ -12,6 +12,11 @@
 
 <body>
     <div class="form">
+        <a href="{{ url_for('home') }}">
+            <button type="button" class="button">
+                <span class="button-text">⬅️Back</span>
+            </button>
+        </a>
         <h1>My Homes</h1>
             {% set my_houses = houses | selectattr(4, '==', user_id) | list %}
             <ul>

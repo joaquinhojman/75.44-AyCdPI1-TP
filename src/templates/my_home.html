@@ -29,9 +29,15 @@
 
 </script>
   <body>
-    <h1>House description form</h1>
     <div class="form-container">
-    <form method="post" action="{{ url_for('create_home') }}" onsubmit="return validateForm()">
+      <form method="post" action="{{ url_for('create_home') }}" onsubmit="return validateForm()">
+        <a href="{{ url_for('home') }}">
+          <button type="button" class="button">
+              <span class="button-text">⬅️Back</span>
+          </button>
+        </a>
+    
+      <h1>House description form</h1>
       <label for="start_date">Start date:</label>
       <input type="date" id="start_date" name="start_date" required>
       
