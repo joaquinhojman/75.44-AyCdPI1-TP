@@ -21,6 +21,14 @@
             <div class="form-container">
             <h1> My Profile </h1>
             <form method="POST" action="{{ url_for('edit') }}" onsubmit="return validateForm()">
+                {% if user.photo_url %}
+                    <img src="{{ user.photo_url }}" class="imagen-circular">
+                    <input type="text" id="photo_url" name="photo_url" rows="5" cols="50" value="{{user.photo_url}}" required>
+                {% else %}
+                    <label for="photo_url">Photo url:</label>
+                    <input type="text" id="photo_url" name="photo_url" rows="5" cols="50" placeholder="Set photo url..." required>
+                {% endif %}
+
                 <label for="country">Country:</label>
                 {% if user.country %}
                     <input type="text" id="country" name="country" rows="5" cols="50" value="{{user.country}}" required>

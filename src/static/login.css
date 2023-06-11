@@ -1,4 +1,9 @@
 /* Google-style login box */
+body {
+  background-image: url('OPSEG70.jpg');
+  background-size: cover;    
+}
+
 .login-box {
   margin: 20px auto;
   width: 400px;
@@ -6,6 +11,7 @@
   border-radius: 5px;
   padding: 20px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .login-box h1 {

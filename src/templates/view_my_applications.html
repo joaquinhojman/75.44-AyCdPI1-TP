@@ -39,7 +39,7 @@
                         </div>
                     </li>
 
-                    {% if application[0] == True %}
+                    {% if application[0] == True and application[8] == True %}
                         <form method="POST" action="{{ url_for('rate_home',  house_id=application[5]) }}">
                             <label for="rating">Rating:</label>
                             <div class="rate">

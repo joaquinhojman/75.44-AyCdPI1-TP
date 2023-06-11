@@ -1,6 +1,7 @@
 /* Google-style index page */
 body {
-  background-color: #f2f2f2;
+  background-image: url('OPSEG70.jpg');
+  background-size: cover;    
   font-family: Arial, sans-serif;
 }
 

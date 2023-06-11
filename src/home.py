@@ -1,6 +1,7 @@
 from operator import or_, and_
 import models
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 from user import get_current_user
 from fastapi import APIRouter, Form, Request, Depends
@@ -41,13 +42,14 @@ async def my_home(request: Request, response_class=HTMLResponse, db: Session = D
     return templates.TemplateResponse("my_home.html", {"request": request, "animals": animals})
 
 @router.post("/edit", response_class=HTMLResponse)
-def edit(request: Request, age: str = Form(...), country: str = Form(...), description: str = Form(...), db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
+def edit(request: Request, age: str = Form(...), country: str = Form(...), description: str = Form(...), photo_url: str = Form(...),db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
     user = db.query(models.User)\
         .filter(models.User.user_id == user_id)\
         .first()
     user.age = age
     user.country = country
     user.description = description
+    user.photo_url = photo_url
     db.commit()
     return templates.TemplateResponse("home2.html", {"request": request, "user_id": user_id, "user": user})
 
@@ -126,8 +128,9 @@ async def view_my_applications(request: Request, response_class=HTMLResponse, us
     new_applications = []
     for application in applications:
         house = db.query(models.House).filter(models.House.house_id == application[2]).first()
-        rating = db.query(models.RatingsHouses).filter(and_(models.RatingsHouses.house_id == str(house.house_id), models.RatingsHouses.user_id == str(user_id))).first()
-        new_applications.append((application[3], house.description, formatFecha(house.start_date), formatFecha(house.end_date), house.city, house.house_id, rating.rating if rating != None else None, rating.comment if rating != None else None))
+        rating = db.query(models.RatingsHouses).filter(and_(models.RatingsHouses.house_id == str(house.house_id), models.RatingsHouses.user_id == str(user_id))).first()        
+        show_rating = True if datetime.now().date() > house.end_date.date() else False
+        new_applications.append((application[3], house.description, formatFecha(house.start_date), formatFecha(house.end_date), house.city, house.house_id, rating.rating if rating != None else None, rating.comment if rating != None else None, show_rating))
 
     print(new_applications)
     return templates.TemplateResponse("view_my_applications.html", {"request": request, "applications": new_applications})

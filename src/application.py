@@ -1,3 +1,4 @@
+import datetime
 import logging
 from operator import and_
 
@@ -51,7 +52,7 @@ async def applications(request: Request, response_class=HTMLResponse, user_id: s
         print(comments)
         comments = comments[:min(len(comments), 5)]
         print(comments)
-        usernames.append((user.username, app.user_application_id, user.description, user.country, user.age, mean_user_rating, comments))
+        usernames.append((user.username, app.user_application_id, user.description, user.country, user.age, mean_user_rating, comments, user.photo_url))
     
     return templates.TemplateResponse("applications.html", {"request": request, "applications": usernames,
                                                             "user_id": user_id})
@@ -65,7 +66,11 @@ async def applications_confirmed(request: Request, response_class=HTMLResponse, 
     )).first()
     user = db.query(models.User).filter(models.User.user_id == application.user_id).first()
     rating = db.query(models.Ratings).filter(and_(models.Ratings.user_id == str(user.user_id), models.Ratings.house_id == str(house))).first()
-    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id, "house_id": house, "rating": rating})
+    
+    end_date = db.query(models.House).filter(models.House.house_id == house).first().end_date.date()
+    show_rating = True if datetime.datetime.now().date() > end_date else False
+
+    return templates.TemplateResponse("applications_confirmed.html", {"request": request, "user": user, "user_id": user_id, "house_id": house, "rating": rating, "show_rating": show_rating})
 
 
 @router.post('/application/reject')

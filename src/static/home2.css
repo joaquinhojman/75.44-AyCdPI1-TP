@@ -14,7 +14,8 @@
     font-size: 16px;
     line-height: 1.5;
     color: #333;
-    background-color: #f5f5f5;
+    background-image: url('OPSEG70.jpg');
+    background-size: cover;    
   }
   
   /* Encabezado */
@@ -193,4 +194,11 @@
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
+}
+
+.imagen-circular {
+  width: 200px; /* Tamaño fijo */
+  height: 200px; /* Tamaño fijo */
+  border-radius: 50%; /* Forma circular */
+  object-fit: cover; /* Ajustar la imagen dentro del contenedor */
 }

@@ -30,6 +30,7 @@
                 <label>Aplicante:</label>
                 {{ user.username }}
             </div>
+            <img src="{{ user.photo_url }}" class="imagen-circular">
             {% if user.country != None %} 
                 <div class="description">
                     <label>Country:</label>
@@ -49,6 +50,8 @@
             </div>
             {% endif %}
         </form>
+
+        {% if show_rating == True %} 
         <form method="POST" action="{{ url_for('rate_applicant', user_id=user.user_id, house_id=house_id) }}">
             <label for="rating">Rating:</label>
             <div class="rate">
@@ -91,5 +94,7 @@
             {% endif %}
             <button type="submit">Rate your applicant!</button>
         </form>
+        {% endif %}
+
     </div>
 </body>

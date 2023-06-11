@@ -46,6 +46,7 @@
         <li class="house">
             <div style="display: flex; margin-top:1rem;">
             <label><b>Aplicante:  &nbsp;</b></label> <p>{{ application[0] }}</p> </div>
+            <img src="{{ application[7] }}" class="imagen-circular">
             <div style="display: flex;">
             {% if application[2] != None %} 
                 <label>Description:  &nbsp;</label> <p>{{ application[2] }}</p>
@@ -72,7 +73,7 @@
             </ul>
             {% else %}
             <label>Mean rating:  &nbsp;</label>
-            <p>User has not been ratings yet</p>
+            <p>User has not been rated yet</p>
             {% endif %}
             <div style="display: flex;">
             <a onclick="accept_application('{{ application[1] }}')">
