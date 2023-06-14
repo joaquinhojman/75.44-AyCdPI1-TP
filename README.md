@@ -14,3 +14,4 @@ Luego, para borrar el container al finalizar el uso:
 Tener en cuenta que esta ultima acción borrara la base de datos.
 
 En caso de estar en un entorno windows debe tener abierta la aplicación de Docker Desktop.
+Al levantar la aplicación se corre un script para crear algunos datos en la base, los que fueron usados en el video de la demo.
